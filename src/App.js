@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import { Col } from 'react-bootstrap';
+import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import "../node_modules/bpg-arial-caps/css/bpg-arial-caps.min.css";
+import CalculateFromXLSX from './Components/CalculateFromXLSX';
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={
+        <Col className='d-flex gap-3 align-items-center p-4'>
+          <Link to='/uniques'>UNIQUES</Link>
+        </Col>
+      } />
+      <Route path='/uniques' element={<CalculateFromXLSX />} />
+    </Routes>
   );
 }
 
