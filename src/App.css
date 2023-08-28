@@ -12,3 +12,15 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
+.overflow-v {
+  overflow-y: auto;
+}
+
+.overflow-v::-webkit-scrollbar {
+  width: 3px;
+}
+
+.overflow-v::-webkit-scrollbar-thumb {
+  background-color: #333;
+}

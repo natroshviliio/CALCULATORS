@@ -4,8 +4,72 @@ import { IoAdd } from "react-icons/io5";
 import { BsTrash3Fill } from "react-icons/bs";
 
 const CalculateFromXLSX = () => {
-    const [leftvalues, setLeftValues] = useState([{ value: 0 }]);
-    const [rightValues, setRightValues] = useState([{ value: 0 }]);
+    const [leftvalues, setLeftValues] = useState([
+        { value: 100 },
+        { value: 23 },
+        { value: 153 },
+        { value: 123 },
+        { value: 46 },
+        { value: 23 },
+        { value: 154 },
+        { value: 122 },
+        { value: 87 },
+        { value: 19 },
+        { value: 76 },
+        { value: 35 },
+        { value: 26 },
+        { value: 176 },
+        { value: 148 },
+        { value: 13 },
+        { value: 7 },
+        { value: 28 },
+        { value: 1 },
+        { value: 57 },
+        { value: 49 },
+        { value: 154 },
+        { value: 123 },
+        { value: 143 },
+        { value: 1 },
+        { value: 97 },
+        { value: 345 },
+        { value: 196 },
+        { value: 34 },
+        { value: 87 },
+        { value: 54 },
+    ]);
+    const [rightValues, setRightValues] = useState([
+        { value: 200 },
+        { value: 76 },
+        { value: 463 },
+        { value: 12 },
+        { value: 54 },
+        { value: 55 },
+        { value: 26 },
+        { value: 53 },
+        { value: 48 },
+        { value: 94 },
+        { value: 24 },
+        { value: 65 },
+        { value: 34 },
+        { value: 54 },
+        { value: 154 },
+        { value: 234 },
+        { value: 32 },
+        { value: 144 },
+        { value: 6 },
+        { value: 3 },
+        { value: 22 },
+        { value: 445 },
+        { value: 23 },
+        { value: 21 },
+        { value: 54 },
+        { value: 34 },
+        { value: 333 },
+        { value: 254 },
+        { value: 187 },
+        { value: 3 },
+        { value: 55 },
+    ]);
     const [leftFiltered, setLeftFiltered] = useState([]);
     const [rightFiltered, setRightFiltered] = useState([]);
     const [leftJoinedValues, setLeftJoinedValues] = useState([]);
@@ -144,32 +208,40 @@ const CalculateFromXLSX = () => {
     // }, [leftJoinedValues, rightJoinedValues])
 
     return (
-        <Col className='bpg-arial-caps'>
-            <Col className='fs-3 d-flex align-items-center border border-0 border-bottom border-secondary p-3' style={{ fontWeight: "bold" }}>
+        <Col className='bpg-arial-caps d-flex flex-column' style={{ height: '100vh' }}>
+            <Col className='fs-3 d-flex align-items-center border border-0 border-bottom border-secondary p-3' style={{ fontWeight: "bold", flex: 0 }}>
                 UNIQUE NUMBERS + SUM
             </Col>
-            <Col className='col-10 mx-auto d-flex gap-3 p-2'>
-                <Col className='p-3 d-flex flex-column gap-2 col-3'>
-                    {leftvalues.map((x, i) => {
-                        return (
-                            <Col key={i} className='col-12 d-flex gap-2'>
-                                <Form.Control type='number' className='shadow-sm rounded-1' size='lg' value={x.value} placeholder={`left value ${i}`} onChange={(e) => changeLeftValue(e, i)} />
-                                {i > 0 && <Button variant='danger' className='px-3' onClick={() => removeLeftValue(i)}><BsTrash3Fill /></Button>}
-                            </Col>
-                        )
-                    })}
-                    <Button className='col-12' onClick={addLeftValue}><IoAdd className='fs-4' style={{ fontWeight: "bold" }} /></Button>
+            <Col className='col-11 mx-auto d-flex gap-3 p-2 overflow-hidden' style={{ flex: 1 }}>
+                <Col className='d-flex flex-column gap-2 col-3 pe-2 pb-2 rounded-2 shadow'>
+                    <Col className='col-12 bg-white p-2 border border-0 border-bottom'>
+                        <Button className='col-12' onClick={addLeftValue}><IoAdd style={{ fontWeight: "bold" }} /></Button>
+                    </Col>
+                    <Col className='d-flex flex-column gap-2 p-2 overflow-v'>
+                        {leftvalues.map((x, i) => {
+                            return (
+                                <Col key={i} className='col-12 d-flex gap-2'>
+                                    <Form.Control type='number' className='shadow-sm rounded-1' size='lg' value={x.value} placeholder={`left value ${i}`} onChange={(e) => changeLeftValue(e, i)} />
+                                    {i > 0 && <Button variant='danger' className='px-3' onClick={() => removeLeftValue(i)}><BsTrash3Fill /></Button>}
+                                </Col>
+                            )
+                        })}
+                    </Col>
                 </Col>
-                <Col className='p-3 d-flex flex-column gap-2 col-3'>
-                    {rightValues.map((x, i) => {
-                        return (
-                            <Col key={i} className='col-12 d-flex gap-2'>
-                                <Form.Control type='number' className='shadow-sm rounded-1' size='lg' value={x.value} placeholder={`right value ${i}`} onChange={(e) => changeRightValue(e, i)} />
-                                {i > 0 && <Button variant='danger' className='px-3' onClick={() => removeRightValues(i)}><BsTrash3Fill /></Button>}
-                            </Col>
-                        )
-                    })}
-                    <Button className='col-12' onClick={addRightValues}><IoAdd className='fs-4' style={{ fontWeight: "bold" }} /></Button>
+                <Col className='d-flex flex-column gap-2 col-3 pe-2 pb-2 rounded-2 shadow'>
+                    <Col className='col-12 bg-white p-2 border border-0 border-bottom'>
+                        <Button className='col-12' onClick={addRightValues}><IoAdd style={{ fontWeight: "bold" }} /></Button>
+                    </Col>
+                    <Col className='d-flex flex-column gap-2 p-2 overflow-v'>
+                        {rightValues.map((x, i) => {
+                            return (
+                                <Col key={i} className='col-12 d-flex gap-2'>
+                                    <Form.Control type='number' className='shadow-sm rounded-1' size='lg' value={x.value} placeholder={`right value ${i}`} onChange={(e) => changeRightValue(e, i)} />
+                                    {i > 0 && <Button variant='danger' className='px-3' onClick={() => removeRightValues(i)}><BsTrash3Fill /></Button>}
+                                </Col>
+                            )
+                        })}
+                    </Col>
                 </Col>
                 <Col className='p-3'>
                     <Col className='d-flex align-items-center gap-3'>
@@ -178,7 +250,7 @@ const CalculateFromXLSX = () => {
                     </Col>
                     <Col className='mt-3'>
                         <Col className='d-flex align-items-center gap-2'><span style={{ fontWeight: "bold" }}>LEFT UNIQUES:</span>{leftFiltered?.join(', ')}</Col>
-                        <Col className='d-flex align-items-center gap-2'><span style={{ fontWeight: "bold" }}>INDEXES:</span>
+                        <Col className='d-flex align-items-center gap-2 flex-wrap'><span style={{ fontWeight: "bold" }}>INDEXES:</span>
                             {leftJoinedValues.map((x, i) => {
                                 return (
                                     <Col key={i} className='col-auto p-2 border border-1 shadow-sm'>{x[2]} = {x[0]}</Col>
@@ -189,7 +261,7 @@ const CalculateFromXLSX = () => {
                     </Col>
                     <Col className='mt-3'>
                         <Col className='d-flex align-items-center gap-2'><span style={{ fontWeight: "bold" }}>RIGHT UNIQUES:</span>{rightFiltered?.join(', ')}</Col>
-                        <Col className='d-flex align-items-center gap-2'><span style={{ fontWeight: "bold" }}>INDEXES:</span>
+                        <Col className='d-flex align-items-center gap-2 flex-wrap'><span style={{ fontWeight: "bold" }}>INDEXES:</span>
                             {rightJoinedValues.map((x, i) => {
                                 return (
                                     <Col key={i} className='col-auto p-2 border border-1 shadow-sm'>{x[2]} = {x[0]}</Col>
