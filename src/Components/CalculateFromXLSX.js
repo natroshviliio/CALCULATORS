@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Button, Col, Form, Spinner } from 'react-bootstrap'
 import { IoAdd } from "react-icons/io5";
 import { BsTrash3Fill } from "react-icons/bs";
 
@@ -10,6 +10,8 @@ const CalculateFromXLSX = () => {
     const [rightFiltered, setRightFiltered] = useState([]);
     const [leftJoinedValues, setLeftJoinedValues] = useState([]);
     const [rightJoinedValues, setRightJoinedValues] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     const addLeftValue = () => {
         const _leftValues = [...leftvalues];
@@ -45,6 +47,7 @@ const CalculateFromXLSX = () => {
     }
 
     const getUniques = (variant) => {
+        setLoading(true);
         let _leftValues = leftvalues.map(x => Number(x.value));
         let _rightValues = rightValues.map(x => Number(x.value));
         const _leftJoinedValues = [];
@@ -134,6 +137,10 @@ const CalculateFromXLSX = () => {
         setLeftFiltered(_leftValues);
     }
 
+    useEffect(() => {
+        setLoading(false);
+    }, [leftFiltered, rightFiltered]);
+
     const setTestValues = () => {
         const leftVal = [];
         const rightVal = [];
@@ -188,9 +195,15 @@ const CalculateFromXLSX = () => {
                     <Col className='d-flex align-items-center gap-3'>
                         <Button variant='warning' onClick={() => getUniques(1)}>Get Uniques Variant 1</Button>
                         <Button variant='warning' onClick={() => getUniques(2)}>Get Uniques Variant 2</Button>
+                        {loading && <Spinner animation='border' variant='success' />}
                     </Col>
                     <Col className='mt-3'>
-                        <Col className='d-flex align-items-center gap-2 shadow-sm p-2'><span className='col-auto' style={{ fontWeight: "bold" }}>LEFT UNIQUES:</span>{leftFiltered?.join(', ')}</Col>
+                        <Col className='d-flex gap-2'>
+                            <Col className='d-flex gap-2 shadow-sm p-2'><span className='col-auto' style={{ fontWeight: "bold" }}>LEFT UNIQUES LENGTH:</span>{leftFiltered?.length}</Col>
+                            <Col className='d-flex gap-2 shadow-sm p-2'><span className='col-auto' style={{ fontWeight: "bold" }}>RIGHT UNIQUES LENGTH:</span>{rightFiltered?.length}</Col>
+                            <Col className='d-flex gap-2 shadow-sm p-2'><span className='col-auto' style={{ fontWeight: "bold" }}>AVERAGE:</span>{(rightFiltered?.length + leftFiltered?.length) / 2}</Col>
+                        </Col>
+                        <Col className='d-flex align-items-center gap-2 shadow-sm p-2 mt-3'><span className='col-auto' style={{ fontWeight: "bold" }}>LEFT UNIQUES:</span>{leftFiltered?.join(', ')}</Col>
                         <Col className='d-flex align-items-center gap-2 flex-wrap shadow-sm p-2 mt-3'><span style={{ fontWeight: "bold" }}>INDEXES:</span>
                             {leftJoinedValues.map((x, i) => {
                                 return (
