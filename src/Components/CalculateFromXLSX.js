@@ -46,100 +46,99 @@ const CalculateFromXLSX = () => {
         setRightValues(_rightValues);
     }
 
-    const getUniques = (variant) => {
+    const getUniques = async (variant) => {
         setLoading(true);
-        let _leftValues = leftvalues.map(x => Number(x.value));
-        let _rightValues = rightValues.map(x => Number(x.value));
-        const _leftJoinedValues = [];
-        const _rightJoinedValues = [];
+        setTimeout(() => {
+            let _leftValues = leftvalues.map(x => Number(x.value));
+            let _rightValues = rightValues.map(x => Number(x.value));
+            const _leftJoinedValues = [];
+            const _rightJoinedValues = [];
 
 
-        const rightUnique = (left, right = []) => {
-            for (let k = 0, u = 0; ;) {
-                let _right = [...right];
-                const sum = right.slice(k, k + u + 1).reduce((a, b) => a + b, 0);
-                const indexes = right.slice(k, k + u + 1).map(x => right.indexOf(x));
-                _right.splice(k, k + u + 1);
+            const rightUnique = (left, right = []) => {
+                for (let k = 0, u = 0; ;) {
+                    let _right = [...right];
+                    const sum = right.slice(k, k + u + 1).reduce((a, b) => a + b, 0);
+                    const indexes = right.slice(k, k + u + 1).map(x => right.indexOf(x));
+                    _right.splice(k, k + u + 1);
 
-                for (let j = 0; j < _right.length; j++) {
-                    const _sum = sum + _right[j];
-                    if (left === _sum) {
-                        const _joinedValues = [...right.slice(k, k + u + 1), _right[j]];
-                        const index13 = _leftValues.indexOf(_leftValues.find(x => x === left));
-                        _rightJoinedValues.push([_joinedValues.join(' + '), `${left} - left`, left]);
-                        right = right.filter((_, idx) => !indexes.includes(idx));
-                        const index12 = right.indexOf(_right[j]);
-                        right = right.filter((_, idx) => idx !== index12);
-                        _leftValues = _leftValues.filter((_, idx) => idx !== index13);
-                        _rightValues = right;
-                        return 0;
+                    for (let j = 0; j < _right.length; j++) {
+                        const _sum = sum + _right[j];
+                        if (left === _sum) {
+                            const _joinedValues = [...right.slice(k, k + u + 1), _right[j]];
+                            const index13 = _leftValues.indexOf(_leftValues.find(x => x === left));
+                            _rightJoinedValues.push([_joinedValues.join(' + '), `${left} - left`, left]);
+                            right = right.filter((_, idx) => !indexes.includes(idx));
+                            const index12 = right.indexOf(_right[j]);
+                            right = right.filter((_, idx) => idx !== index12);
+                            _leftValues = _leftValues.filter((_, idx) => idx !== index13);
+                            _rightValues = right;
+                            return 0;
+                        }
                     }
+                    u >= right.length ? (() => { k++; u = 0 })() : u++;
+                    if (k >= right.length - 1 && u >= right.length - 1) break;
                 }
-                u >= right.length ? (() => { k++; u = 0 })() : u++;
-                if (k >= right.length - 1 && u >= right.length - 1) break;
-            }
-            _rightValues = right;
-        };
+                _rightValues = right;
+            };
 
-        const leftUnique = (right, left = []) => {
-            let sum;
-            let _left = [];
-            let indexes = [];
-            for (let k = 0, u = 0; ;) {
-                _left = [...left];
-                sum = left.slice(k, k + u + 1).reduce((a, b) => a + b, 0);
-                indexes = left.slice(k, k + u + 1).map(x => left.indexOf(x))
-                _left.splice(k, k + u + 1);
+            const leftUnique = (right, left = []) => {
+                let sum;
+                let _left = [];
+                let indexes = [];
+                for (let k = 0, u = 0; ;) {
+                    _left = [...left];
+                    sum = left.slice(k, k + u + 1).reduce((a, b) => a + b, 0);
+                    indexes = left.slice(k, k + u + 1).map(x => left.indexOf(x))
+                    _left.splice(k, k + u + 1);
 
-                for (let j = 0; j < _left.length; j++) {
-                    const _sum = sum + _left[j];
-                    if (right === _sum) {
-                        const _joinedValues = [...left.slice(k, k + u + 1), _left[j]];
-                        const index13 = _rightValues.indexOf(_rightValues.find(x => x === right));
-                        _leftJoinedValues.push([_joinedValues.join(' + '), `${right} - right`, right]);
-                        left = left.filter((_, idx) => !indexes.includes(idx));
-                        const index12 = left.indexOf(_left[j]);
-                        left = left.filter((_, idx) => idx !== index12);
-                        _rightValues = _rightValues.filter((_, idx) => idx !== index13);
-                        _leftValues = left;
-                        return 0
+                    for (let j = 0; j < _left.length; j++) {
+                        const _sum = sum + _left[j];
+                        if (right === _sum) {
+                            const _joinedValues = [...left.slice(k, k + u + 1), _left[j]];
+                            const index13 = _rightValues.indexOf(_rightValues.find(x => x === right));
+                            _leftJoinedValues.push([_joinedValues.join(' + '), `${right} - right`, right]);
+                            left = left.filter((_, idx) => !indexes.includes(idx));
+                            const index12 = left.indexOf(_left[j]);
+                            left = left.filter((_, idx) => idx !== index12);
+                            _rightValues = _rightValues.filter((_, idx) => idx !== index13);
+                            _leftValues = left;
+                            return 0
+                        }
                     }
+                    u >= left.length ? (() => { k++; u = 0 })() : u++;
+                    if (k >= left.length - 1 && u >= left.length - 1) break;
                 }
-                u >= left.length ? (() => { k++; u = 0 })() : u++;
-                if (k >= left.length - 1 && u >= left.length - 1) break;
+                _leftValues = left;
+            };
+
+
+            if (variant === 1) {
+                _leftValues.map((x, i) => {
+                    rightUnique(x, _rightValues, []);
+                });
+
+                _rightValues.map(x => {
+                    leftUnique(x, _leftValues, []);
+                });
+            } else {
+                _rightValues.map(x => {
+                    leftUnique(x, _leftValues, []);
+                });
+
+                _leftValues.map((x, i) => {
+                    rightUnique(x, _rightValues, []);
+                });
             }
-            _leftValues = left;
-        };
 
+            setRightJoinedValues([..._rightJoinedValues]);
+            setRightFiltered(_rightValues);
 
-        if (variant === 1) {
-            _leftValues.map((x, i) => {
-                rightUnique(x, _rightValues, []);
-            });
-
-            _rightValues.map(x => {
-                leftUnique(x, _leftValues, []);
-            });
-        } else {
-            _rightValues.map(x => {
-                leftUnique(x, _leftValues, []);
-            });
-
-            _leftValues.map((x, i) => {
-                rightUnique(x, _rightValues, []);
-            });
-        }
-
-        setRightJoinedValues([..._rightJoinedValues]);
-        setRightFiltered(_rightValues);
-
-        setLeftJoinedValues([..._leftJoinedValues]);
-        setLeftFiltered(_leftValues);
+            setLeftJoinedValues([..._leftJoinedValues]);
+            setLeftFiltered(_leftValues);
+            setLoading(false);
+        }, 300);
     }
-
-    useEffect(() => {
-        setLoading(false);
-    }, [leftFiltered, rightFiltered]);
 
     const setTestValues = () => {
         const leftVal = [];
