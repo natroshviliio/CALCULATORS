@@ -49,8 +49,8 @@ const CalculateFromXLSX = () => {
     const getUniques = async (variant) => {
         setLoading(true);
         setTimeout(() => {
-            let _leftValues = leftvalues.map(x => Number(x.value));
-            let _rightValues = rightValues.map(x => Number(x.value));
+            let _leftValues = leftvalues.map(x => parseFloat(x.value));
+            let _rightValues = rightValues.map(x => parseFloat(x.value));
             const _leftJoinedValues = [];
             const _rightJoinedValues = [];
 
