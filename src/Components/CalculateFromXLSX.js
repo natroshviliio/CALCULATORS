@@ -67,7 +67,7 @@ const CalculateFromXLSX = () => {
                         if (left === _sum) {
                             const _joinedValues = [...right.slice(k, k + u + 1), _right[j]];
                             const index13 = _leftValues.indexOf(_leftValues.find(x => x === left));
-                            _rightJoinedValues.push([_joinedValues.join(' + '), `${left} - left`, left]);
+                            _rightJoinedValues.push([_joinedValues.join(' + ').replace(/\+ -/gi, ' - '), `${left} - left`, left]);
                             right = right.filter((_, idx) => !indexes.includes(idx));
                             const index12 = right.indexOf(_right[j]);
                             right = right.filter((_, idx) => idx !== index12);
