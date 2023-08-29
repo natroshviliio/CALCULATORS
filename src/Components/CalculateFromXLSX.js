@@ -63,7 +63,7 @@ const CalculateFromXLSX = () => {
                     _right.splice(k, k + u + 1);
 
                     for (let j = 0; j < _right.length; j++) {
-                        const _sum = sum + _right[j];
+                        const _sum = parseFloat((sum + _right[j]).toFixed(6));
                         if (left === _sum) {
                             const _joinedValues = [...right.slice(k, k + u + 1), _right[j]];
                             const index13 = _leftValues.indexOf(_leftValues.find(x => x === left));
@@ -93,7 +93,7 @@ const CalculateFromXLSX = () => {
                     _left.splice(k, k + u + 1);
 
                     for (let j = 0; j < _left.length; j++) {
-                        const _sum = sum + _left[j];
+                        const _sum = parseFloat((sum + _left[j]).toFixed(6));
                         if (right === _sum) {
                             const _joinedValues = [...left.slice(k, k + u + 1), _left[j]];
                             const index13 = _rightValues.indexOf(_rightValues.find(x => x === right));
